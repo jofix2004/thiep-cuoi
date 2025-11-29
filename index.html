@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lễ Thành Hôn | 29.12.2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              script: ['"Great Vibes"', 'cursive'],
+              'sans-clean': ['"Montserrat"', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Playfair Display', serif;
+        /* Gradient background: Pink (Top 0-20%) -> White (Middle) -> Sky Blue (Bottom) */
+        /* Removed 'fixed' attachment so the pink stays at the top of the DOCUMENT, not the SCREEN */
+        background: linear-gradient(to bottom, #fff0f3 0%, #fff1f2 15%, #ffffff 40%, #ffffff 60%, #f0f9ff 85%, #e0f2fe 100%);
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+      /* Fallback/Utility classes if tailwind config misses something, though config covers it */
+      .font-script {
+        font-family: 'Great Vibes', cursive;
+      }
+      .font-sans-clean {
+        font-family: 'Montserrat', sans-serif;
+      }
+      /* Hide scrollbar for cleaner look */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1; /* Neutral slate */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/thiep-cuoi/assets/index-CC4FLvet.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+</body>
+</html>
