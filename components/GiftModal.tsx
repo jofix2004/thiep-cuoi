@@ -2,6 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
+// --- CẤU HÌNH ĐƯỜNG DẪN ẢNH ---
+// Lấy đường dẫn gốc
+const BASE_URL = import.meta.env.BASE_URL;
+
 interface GiftModalProps {
   onClose: () => void;
 }
@@ -36,14 +40,14 @@ const GiftModal: React.FC<GiftModalProps> = ({ onClose }) => {
 
         {/* Two Picture Frames */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {/* Frame 1: Groom */}
+            {/* Frame 1: Groom (Nhà Trai) */}
             <div className="flex flex-col items-center">
                 <div className="w-full aspect-[3/4] md:aspect-[4/5] bg-slate-50 rounded-2xl shadow-inner border-2 border-slate-100 overflow-hidden relative group">
-                     {/* Placeholder Image - Replace with Groom's QR or Photo */}
+                     {/* SỬA ĐƯỜNG DẪN TẠI ĐÂY: thêm images/ */}
                      <img 
-                        src="https://picsum.photos/600/800?random=100" 
+                        src={`${BASE_URL}images/QRRe.png`} 
                         alt="Mừng Chú Rể" 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        className="w-full h-full object-contain p-2 bg-white transition-transform duration-500 group-hover:scale-105" 
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
                         <span className="text-white font-serif text-xl tracking-wider">Mừng Chú Rể</span>
@@ -52,14 +56,14 @@ const GiftModal: React.FC<GiftModalProps> = ({ onClose }) => {
                 <h4 className="mt-4 text-xl font-serif text-slate-800 font-bold">Mừng Chú Rể</h4>
             </div>
 
-            {/* Frame 2: Bride */}
+            {/* Frame 2: Bride (Nhà Gái) */}
             <div className="flex flex-col items-center">
                 <div className="w-full aspect-[3/4] md:aspect-[4/5] bg-slate-50 rounded-2xl shadow-inner border-2 border-slate-100 overflow-hidden relative group">
-                     {/* Placeholder Image - Replace with Bride's QR or Photo */}
+                     {/* SỬA ĐƯỜNG DẪN TẠI ĐÂY: thêm images/ */}
                      <img 
-                        src="https://picsum.photos/600/800?random=101" 
+                        src={`${BASE_URL}images/QRDau.png`} 
                         alt="Mừng Cô Dâu" 
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                        className="w-full h-full object-contain p-2 bg-white transition-transform duration-500 group-hover:scale-105" 
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
                         <span className="text-white font-serif text-xl tracking-wider">Mừng Cô Dâu</span>

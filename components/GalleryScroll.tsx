@@ -11,8 +11,6 @@ const getImg = (name: string) => `${BASE}images/${name}`;
 // HÀNG 1: Dùng dải ảnh Anh1 (Từ 1 đến 10)
 // Lưu ý: Tên file phải y hệt trong thư mục (bao gồm dấu cách và .JPG viết hoa)
 const ROW_1 = [
-  getImg("Anh1 (1).JPG"),
-  getImg("Anh1 (2).JPG"),
   getImg("Anh1 (3).JPG"),
   getImg("Anh1 (4).JPG"),
   getImg("Anh1 (5).JPG"),
@@ -25,7 +23,6 @@ const ROW_1 = [
 
 // HÀNG 2: Dùng dải ảnh Anh2 (Từ 1 đến 8)
 const ROW_2 = [
-  getImg("Anh2 (1).JPG"),
   getImg("Anh2 (2).JPG"),
   getImg("Anh2 (3).JPG"),
   getImg("Anh2 (4).JPG"),

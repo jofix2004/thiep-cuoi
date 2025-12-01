@@ -2,6 +2,9 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import SectionHeader from './SectionHeader';
 
+// Lấy đường dẫn gốc để đảm bảo ảnh hiển thị đúng trên mọi môi trường (Local/GitHub Pages)
+const BASE_URL = import.meta.env.BASE_URL;
+
 const CoupleIntro: React.FC = () => {
   const columnVariants: Variants = {
     hidden: { opacity: 0 },
@@ -43,7 +46,7 @@ const CoupleIntro: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mt-12 md:mt-20">
           
-          {/* GROOM COLUMN */}
+          {/* GROOM COLUMN (CHÚ RỂ) */}
           <motion.div 
             variants={columnVariants}
             initial="hidden"
@@ -58,8 +61,9 @@ const CoupleIntro: React.FC = () => {
                
                {/* Main Image Container */}
                <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-2xl">
+                 {/* ĐÃ SỬA: Đường dẫn ảnh Chú Rể */}
                  <img 
-                   src="https://picsum.photos/600/800?random=88" 
+                   src={`${BASE_URL}images/Re.png`}
                    alt="Chú Rể" 
                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                  />
@@ -67,7 +71,7 @@ const CoupleIntro: React.FC = () => {
                </div>
             </motion.div>
 
-            <motion.h3 variants={itemVariants} className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Đức Mạnh</motion.h3>
+            <motion.h3 variants={itemVariants} className="font-script text-3xl md:text-5xl text-rose-800 mb-2">Phạm Văn Hợp</motion.h3>
             <motion.span variants={itemVariants} className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Chú Rể</motion.span>
             
             <motion.p variants={itemVariants} className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">
@@ -75,7 +79,7 @@ const CoupleIntro: React.FC = () => {
             </motion.p>
           </motion.div>
 
-          {/* BRIDE COLUMN */}
+          {/* BRIDE COLUMN (CÔ DÂU) */}
           <motion.div 
             variants={columnVariants}
             initial="hidden"
@@ -90,8 +94,9 @@ const CoupleIntro: React.FC = () => {
                
                {/* Main Image Container */}
                <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-2xl">
+                 {/* ĐÃ SỬA: Đường dẫn ảnh Cô Dâu */}
                  <img 
-                   src="https://picsum.photos/600/800?random=99" 
+                   src={`${BASE_URL}images/Dau.png`}
                    alt="Cô Dâu" 
                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                  />
@@ -99,7 +104,7 @@ const CoupleIntro: React.FC = () => {
                </div>
             </motion.div>
 
-            <motion.h3 variants={itemVariants} className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Thu Hà</motion.h3>
+            <motion.h3 variants={itemVariants} className="font-script text-3xl md:text-5xl text-rose-800 mb-2">Phạm Thị Hậu</motion.h3>
             <motion.span variants={itemVariants} className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Cô Dâu</motion.span>
             
             <motion.p variants={itemVariants} className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">

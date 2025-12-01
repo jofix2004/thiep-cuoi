@@ -3,9 +3,23 @@ import { EventDetail } from '../types';
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 
+// --- CẤU HÌNH ĐƯỜNG DẪN ẢNH ---
+const BASE_URL = import.meta.env.BASE_URL;
+
+// Danh sách ảnh theo thứ tự sự kiện (0, 1, 2, 3)
+const EVENT_IMAGES = [
+  `${BASE_URL}images/Anh1 (5).JPG`, // Sự kiện 1
+  `${BASE_URL}images/Anh1 (3).JPG`, // Sự kiện 2
+  `${BASE_URL}images/Anh2 (3).JPG`, // Sự kiện 3
+  `${BASE_URL}images/Anh2 (7).JPG`, // Sự kiện 4
+];
+
 const EventCard: React.FC<{ event: EventDetail; index: number }> = ({ event, index }) => {
   // Desktop: Alternate sides. Mobile: Always content on right of line.
   const isEven = index % 2 === 0;
+
+  // Lấy ảnh tương ứng với index, nếu không có thì lấy ảnh đầu tiên làm fallback
+  const imageSrc = EVENT_IMAGES[index] || EVENT_IMAGES[0];
 
   return (
     <motion.div
@@ -29,11 +43,14 @@ const EventCard: React.FC<{ event: EventDetail; index: number }> = ({ event, ind
         {/* Changed from fixed height to aspect-[3/4] for portrait/vertical photos */}
         <div className="relative w-full aspect-[3/4] rounded-[2rem] overflow-hidden shadow-xl border-4 border-white group">
           <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors z-10 duration-500" />
+          
+          {/* ĐÃ ĐỔI ẢNH TẠI ĐÂY */}
           <img
-            src={`https://picsum.photos/450/600?random=${index + 50}`}
+            src={imageSrc}
             alt={event.title}
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
+          
           {/* Date Overlay */}
           <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm p-3 rounded-2xl text-center min-w-[80px] z-20 shadow-lg">
              <span className="block text-3xl font-serif text-rose-600 font-bold">{event.date.split('/')[0]}</span>
