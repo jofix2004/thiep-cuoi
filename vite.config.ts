@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
       },
       plugins: [react()],
-      // 👇 SỬA DÒNG NÀY: Đổi từ '/thiep-cuoi/' thành '/'
+      // QUAN TRỌNG: Đổi về '/' cho tên miền riêng
       base: '/', 
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

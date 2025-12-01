@@ -1,16 +1,16 @@
 {
   "name": "thiep-cuoi",
-"homepage": "https://www.hauhop2912.blog",
+  "homepage": "https://www.hauhop2912.blog",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-"scripts": {
-  "dev": "vite",
-  "build": "tsc && vite build",
-  "preview": "vite preview",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
   "dependencies": {
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.555.0",
