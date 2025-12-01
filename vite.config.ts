@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
       },
       plugins: [react()],
-      // Đã sửa dòng này từ '/thiep-cuoi/' thành '/'
+      // 👇 SỬA DÒNG NÀY: Đổi từ '/thiep-cuoi/' thành '/'
       base: '/', 
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
