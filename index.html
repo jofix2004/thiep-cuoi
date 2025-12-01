@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lễ Thành Hôn | 29.12.2025</title>
     
-    <!-- Tailwind CSS (Dùng CDN cho nhanh, nếu muốn chuẩn production nên cài package sau) -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -35,6 +35,8 @@
       }
       .font-script { font-family: 'Great Vibes', cursive; }
       .font-sans-clean { font-family: 'Montserrat', sans-serif; }
+      
+      /* Scrollbar */
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: transparent; }
       ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -44,6 +46,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Vite sẽ tự xử lý file này -->
+    <!-- Vite sẽ tự động xử lý import CSS và JS tại đây -->
   </body>
 </html>
