@@ -9,10 +9,10 @@ const EventCard: React.FC<{ event: EventDetail; index: number }> = ({ event, ind
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 80, filter: 'blur(10px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: 0.1 }}
+      transition={{ duration: 1, delay: 0.1, ease: "easeOut" }}
       className={`relative flex flex-col md:flex-row items-center w-full pl-12 md:pl-0 ${
         isEven ? 'md:flex-row' : 'md:flex-row-reverse'
       }`}
@@ -47,7 +47,7 @@ const EventCard: React.FC<{ event: EventDetail; index: number }> = ({ event, ind
 
       {/* --- INFO BLOCK --- */}
       {/* Added padding (pl-12/pr-12) to create breathing room from the center line */}
-      <div className={`w-full md:w-[50%] flex flex-col justify-center mt-6 md:mt-0 ${
+      <div className={`w-full md:w-[50%] flex flex-col justify-center mt-6 md:mt-0 px-2 md:px-0 ${
          !isEven 
            ? 'md:text-right md:items-end md:pr-12' 
            : 'md:text-left md:items-start md:pl-12'

@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, ArrowDown, Gift, Heart, MapPin, Calendar } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence, Variants } from 'framer-motion';
+import { Volume2, VolumeX, ArrowDown, Gift } from 'lucide-react';
 import FloatingPetals from './components/FloatingPetals';
 import Section from './components/Section';
 import SectionHeader from './components/SectionHeader';
@@ -10,6 +10,10 @@ import GalleryScroll from './components/GalleryScroll';
 import GiftModal from './components/GiftModal';
 import CoupleIntro from './components/CoupleIntro';
 import { EventDetail } from './types';
+
+// --- CẤU HÌNH ĐƯỜNG DẪN ẢNH (Quan trọng) ---
+const BASE_URL = import.meta.env.BASE_URL; // Tự động lấy đường dẫn gốc
+const IMG_PATH = `${BASE_URL}images`;      // Đường dẫn đến thư mục ảnh
 
 // Constants
 const WEDDING_DATE = new Date('2025-12-29T13:00:00');
@@ -68,6 +72,25 @@ const App: React.FC = () => {
   const buttonIconColor = useTransform(scrollY, [0, 800], ["#be123c", "#334155"]); // rose-700 -> slate-700
   const buttonBgColor = useTransform(scrollY, [0, 800], ["rgba(255, 255, 255, 0.3)", "rgba(255, 255, 255, 0.8)"]);
 
+  // Stagger variants for the Intro Text block
+  const introContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  const introItemVariants: Variants = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(5px)' },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'blur(0px)',
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   return (
     // Replaced solid background with a gradient handled in index.html, but we add classes here for text selection and fallback
     <div className="min-h-screen text-rose-950 selection:bg-rose-300 selection:text-white overflow-x-hidden font-serif">
@@ -91,7 +114,12 @@ const App: React.FC = () => {
       </motion.button>
 
       {/* --- HERO SECTION: Full Screen, Cinematic (PINK THEME) --- */}
-      <header className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center">
+      {/* 
+          Strategy: justify-end to keep content low.
+          Mobile: pb-32 (High padding to lift text up significantly)
+          Laptop/Desktop: pb-8/12 (Low padding to keep it compact)
+      */}
+      <header className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-end pb-32 md:pb-8 lg:pb-12">
         {/* Background Layer */}
         <motion.div 
           style={{ scale: bgScale }}
@@ -100,11 +128,13 @@ const App: React.FC = () => {
           {/* Light overlay to brighten image and make dark text readable */}
           <div className="absolute inset-0 bg-white/20 z-10" />
           
+          {/* --- ĐÃ ĐỔI ẢNH TẠI ĐÂY --- */}
           <img 
-            src="https://picsum.photos/1920/1080?random=1" 
+            src={`${IMG_PATH}/Cover (1).png`}
             alt="Wedding Couple" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-[center_25%]"
           />
+          
           {/* Grain overlay for vintage feel */}
           <div className="absolute inset-0 opacity-20 pointer-events-none z-10 mix-blend-multiply" style={{backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")'}}></div>
           {/* Gradient to blend smoothly into the next section */}
@@ -114,39 +144,73 @@ const App: React.FC = () => {
         {/* Hero Content */}
         <motion.div 
           style={{ y: heroTextY, opacity: heroOpacity }}
-          className="relative z-30 text-center px-4 w-full max-w-4xl mx-auto flex flex-col items-center"
+          className="relative z-30 text-center px-4 w-full max-w-5xl mx-auto flex flex-col items-center"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1.5, ease: "circOut" }}
-            className="border-b border-rose-800/40 pb-4 mb-6"
+            className="border-b border-rose-800/40 pb-1 mb-1 md:mb-2"
           >
-            <span className="text-rose-900 text-lg md:text-xl font-sans-clean uppercase tracking-[0.5em] drop-shadow-sm font-semibold">
+            {/* The Wedding Of: Small but legible with glow */}
+            <span className="text-rose-900 text-xs md:text-sm lg:text-base font-sans-clean uppercase tracking-[0.4em] font-semibold [text-shadow:_0_0_10px_rgba(255,255,255,0.8),_0_0_2px_rgba(255,255,255,0.9)]">
               The Wedding Of
             </span>
           </motion.div>
 
-          <h1 className="text-7xl md:text-[10rem] font-script text-rose-950 leading-none drop-shadow-sm filter">
-            Đức Mạnh
-          </h1>
-          <span className="text-4xl md:text-6xl font-script text-rose-600 my-2 drop-shadow-sm">&</span>
-          <h1 className="text-7xl md:text-[10rem] font-script text-rose-950 leading-none drop-shadow-sm mb-8">
-            Thu Hà
-          </h1>
-
-          {/* New Countdown Component */}
-          <div className="mt-8">
-             <Countdown targetDate={WEDDING_DATE} />
+          {/* 
+             Names Block:
+             - Using negative margins to pull lines closer vertically.
+             - Leading-tight/none to reduce bounding box height.
+             - Text sizes balanced: 6xl (Mobile), 7xl (Laptop), 9xl (Desktop)
+             - Added soft white text-shadow for "viền đổ bóng trắng mỏng"
+          */}
+          <div className="flex flex-col items-center -space-y-2 md:-space-y-4 lg:-space-y-6">
+            <motion.h1 
+              initial={{ y: 50, opacity: 0, filter: 'blur(10px)' }}
+              animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+              className="text-7xl md:text-7xl lg:text-8xl xl:text-9xl font-script text-rose-950 leading-[0.8] filter py-1 [text-shadow:_0_0_3px_rgba(255,255,255,0.3),_1px_1px_2px_rgba(255,255,255,0.9)]"
+            >
+              Đức Mạnh
+            </motion.h1>
+            
+            <motion.span 
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6, type: 'spring' }}
+              className="text-3xl md:text-4xl lg:text-5xl font-script text-rose-600 relative z-10 py-1 [text-shadow:_0_0_3px_rgba(255,255,255,0.3)]"
+            >
+              &
+            </motion.span>
+            
+            <motion.h1 
+              initial={{ y: 50, opacity: 0, filter: 'blur(10px)' }}
+              animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+              transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+              className="text-7xl md:text-7xl lg:text-8xl xl:text-9xl font-script text-rose-950 leading-[0.8] py-1 [text-shadow:_0_0_3px_rgba(255,255,255,0.3),_1px_1px_2px_rgba(255,255,255,0.9)]"
+            >
+              Thu Hà
+            </motion.h1>
           </div>
+
+          {/* Countdown Scale: Adjusted to be compact */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="mt-4 md:mt-6 scale-90 md:scale-90 origin-bottom [drop-shadow:_0_0_10px_rgba(255,255,255,0.8)]"
+          >
+             <Countdown targetDate={WEDDING_DATE} />
+          </motion.div>
         </motion.div>
 
         <motion.div 
           animate={{ y: [0, 15, 0], opacity: [0.5, 1, 0.5] }}
           transition={{ repeat: Infinity, duration: 2.5 }}
-          className="absolute bottom-10 z-30 text-rose-900"
+          className="absolute bottom-6 md:bottom-4 z-30 text-rose-900"
         >
-          <ArrowDown className="w-6 h-6 md:w-10 md:h-10 opacity-70" />
+          <ArrowDown className="w-6 h-6 md:w-6 md:h-6 opacity-70" />
         </motion.div>
       </header>
 
@@ -165,23 +229,26 @@ const App: React.FC = () => {
          />
 
          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            variants={introContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
             className="relative z-10 max-w-3xl mx-auto space-y-6"
          >
-           <h2 className="text-4xl md:text-5xl font-serif text-rose-950 leading-tight">
-             29 . 12 . 2025
-           </h2>
-           <p className="text-xl text-rose-700 italic font-serif">
-             (Tức ngày 10 tháng 11 năm Ất Tỵ)
-           </p>
+           <motion.div variants={introItemVariants}>
+             <h2 className="text-4xl md:text-5xl font-serif text-rose-950 leading-tight">
+               29 . 12 . 2025
+             </h2>
+             <p className="text-xl text-rose-700 italic font-serif mt-2">
+               (Tức ngày 10 tháng 11 năm Ất Tỵ)
+             </p>
+           </motion.div>
 
-           <p className="text-lg md:text-2xl text-gray-700 font-light leading-relaxed font-sans-clean px-6 mt-8">
+           <motion.p variants={introItemVariants} className="text-lg md:text-2xl text-gray-700 font-light leading-relaxed font-sans-clean px-6 mt-8">
              "Tình yêu không phải là tìm thấy một người hoàn hảo, mà là học cách nhìn thấy những điều tuyệt vời từ một người không hoàn hảo."
              <br/>
              Chúng mình trân trọng kính mời bạn đến chung vui trong ngày hạnh phúc nhất.
-           </p>
+           </motion.p>
          </motion.div>
       </Section>
 
@@ -248,6 +315,10 @@ const App: React.FC = () => {
                  className="relative cursor-pointer group mt-4 select-none"
                  whileHover={{ scale: 1.02 }}
                  whileTap={{ scale: 0.98 }}
+                 initial={{ opacity: 0, scale: 0.9, filter: 'blur(5px)' }}
+                 whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                 transition={{ duration: 0.8 }}
+                 viewport={{ once: true }}
                >
                  {/* Outer Glow */}
                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-sky-200/40 blur-xl rounded-[3rem] -z-10 group-hover:bg-sky-300/50 transition-colors duration-500"></div>
@@ -279,14 +350,21 @@ const App: React.FC = () => {
             </div>
 
             {/* Wishes Form Area - Reduced margin-top (mt-16 -> mt-8) */}
-            <div id="wishes-form" className="mt-12 bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-[2rem] border border-white max-w-2xl mx-auto shadow-lg relative z-20">
+            <motion.div 
+              id="wishes-form" 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="mt-12 bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-[2rem] border border-white max-w-2xl mx-auto shadow-lg relative z-20"
+            >
                 <h3 className="text-2xl font-serif text-slate-700 mb-6">Lưu Bút</h3>
                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                   <input type="text" placeholder="Tên của bạn" className="w-full bg-white/70 border border-slate-200 p-4 rounded-xl focus:outline-none focus:border-sky-300 font-sans-clean text-slate-900 placeholder:text-slate-400" />
                   <textarea rows={4} placeholder="Lời chúc chân thành..." className="w-full bg-white/70 border border-slate-200 p-4 rounded-xl focus:outline-none focus:border-sky-300 font-sans-clean resize-none text-slate-900 placeholder:text-slate-400" />
                   <button className="w-full py-3 bg-sky-200/50 hover:bg-sky-200 text-sky-900 rounded-xl transition-colors font-serif uppercase tracking-widest text-sm font-semibold">Gửi đi</button>
                 </form>
-            </div>
+            </motion.div>
          </div>
       </section>
 

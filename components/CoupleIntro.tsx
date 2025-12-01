@@ -1,8 +1,36 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import SectionHeader from './SectionHeader';
 
 const CoupleIntro: React.FC = () => {
+  const columnVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.3 }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30, filter: 'blur(5px)' },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'blur(0px)',
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
+  const imageVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.9, filter: 'blur(5px)' },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      filter: 'blur(0px)',
+      transition: { duration: 1, ease: "easeOut" }
+    }
+  };
+
   return (
     <section className="py-20 md:py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
@@ -17,14 +45,14 @@ const CoupleIntro: React.FC = () => {
           
           {/* GROOM COLUMN */}
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            variants={columnVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
             className="flex flex-col items-center text-center"
           >
             {/* Image Frame */}
-            <div className="relative w-72 md:w-96 aspect-[3/4] mb-8 group">
+            <motion.div variants={imageVariants} className="relative w-72 md:w-96 aspect-[3/4] mb-8 group">
                {/* Decorative border offset */}
                <div className="absolute inset-0 border-2 border-rose-200 rounded-[3rem] translate-x-4 translate-y-4 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                
@@ -37,26 +65,26 @@ const CoupleIntro: React.FC = () => {
                  />
                  <div className="absolute inset-0 bg-gradient-to-t from-rose-900/40 to-transparent opacity-60"></div>
                </div>
-            </div>
+            </motion.div>
 
-            <h3 className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Đức Mạnh</h3>
-            <span className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Chú Rể</span>
+            <motion.h3 variants={itemVariants} className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Đức Mạnh</motion.h3>
+            <motion.span variants={itemVariants} className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Chú Rể</motion.span>
             
-            <p className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">
+            <motion.p variants={itemVariants} className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">
               "Người đàn ông trưởng thành không phải là người không bao giờ vấp ngã, mà là người biết đứng dậy và che chở cho người mình yêu thương."
-            </p>
+            </motion.p>
           </motion.div>
 
           {/* BRIDE COLUMN */}
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            variants={columnVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
             className="flex flex-col items-center text-center"
           >
             {/* Image Frame */}
-            <div className="relative w-72 md:w-96 aspect-[3/4] mb-8 group">
+            <motion.div variants={imageVariants} className="relative w-72 md:w-96 aspect-[3/4] mb-8 group">
                {/* Decorative border offset */}
                <div className="absolute inset-0 border-2 border-rose-200 rounded-[3rem] -translate-x-4 translate-y-4 transition-transform duration-500 group-hover:-translate-x-2 group-hover:translate-y-2"></div>
                
@@ -69,14 +97,14 @@ const CoupleIntro: React.FC = () => {
                  />
                  <div className="absolute inset-0 bg-gradient-to-t from-rose-900/40 to-transparent opacity-60"></div>
                </div>
-            </div>
+            </motion.div>
 
-            <h3 className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Thu Hà</h3>
-            <span className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Cô Dâu</span>
+            <motion.h3 variants={itemVariants} className="font-script text-5xl md:text-6xl text-rose-800 mb-2">Thu Hà</motion.h3>
+            <motion.span variants={itemVariants} className="font-sans-clean text-xs uppercase tracking-[0.3em] text-rose-500 font-bold mb-6">Cô Dâu</motion.span>
             
-            <p className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">
+            <motion.p variants={itemVariants} className="font-serif text-lg text-slate-600 max-w-sm italic leading-relaxed">
               "Em không cần một tình yêu quá lớn lao, chỉ cần mỗi ngày mở mắt ra đều thấy anh bên cạnh, bình yên và ấm áp."
-            </p>
+            </motion.p>
           </motion.div>
 
         </div>
